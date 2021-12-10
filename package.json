@@ -1,0 +1,13 @@
+{
+  "name": "farm_mate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index",
+    "dev": "node index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
