@@ -1,0 +1,2 @@
+2. Missing value imputation
+Simulate a real-world missing data scenario by using the OpenML diamonds dataset (note that scikit-learn has an inbuilt function for fetching OpenML datasets) and randomly setting 5% of the values in `carat` column to null. Further, use any suitable imputation method to regenerate the missing values. Use RMSE between the ground truth and regenerated missing values as the evaluation metric, and report your findings.
