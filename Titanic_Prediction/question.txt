@@ -1,2 +1,0 @@
-1. Titanic Prediction
-Using the Kaggle Titanic dataset (https://www.kaggle.com/competitions/titanic/), create a model that predicts which passengers survived the Titanic shipwreck. Use the Kaggle platform for automated evaluation, and sent the link of your notebook
