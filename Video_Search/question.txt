@@ -1,0 +1,3 @@
+3.Video Search
+Create a program that can search through a video file, and locate a specific object, person, or phrase within the video. Given a video and a search query (e.g. "a lion laying on a rock"), the program should output particular subsections of the video (in the form of timestamps) which is likely to match the query.
+
