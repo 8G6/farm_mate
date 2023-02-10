@@ -48,6 +48,9 @@ app.post('/upload', function (req, res) {
                     if(exifData.gps.GPSLatitude && exifData.gps.GPSLatitude){
                         url = getUrl(exifData.gps)
                     }
+                    else{
+                        url=''
+                    }
                     await write('map.html',`
                         <!DOCTYPE html>
                         <html lang="en">
