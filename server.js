@@ -45,7 +45,9 @@ app.post('/upload', function (req, res) {
                 if (error)
                 res.send('Error: '+error.message);
                 else{
-                    url = getUrl(exifData.gps)
+                    if(exifData.gps.GPSLatitude && exifData.gps.GPSLatitude){
+                        url = getUrl(exifData.gps)
+                    }
                     await write('map.html',`
                         <!DOCTYPE html>
                         <html lang="en">
@@ -70,8 +72,8 @@ app.post('/upload', function (req, res) {
                             }
                             else{
                                 if(exif){
-                                    if(exif.gps=={}){
-                                        alert("Image EXIF GPS info is empty")
+                                    if(!exif.gps.GPSLatitude && !exif.gps.GPSLatitude){
+                                        alert("EXIF GPS Data is empty")
                                     }
                                     else if(verify(exif.gps.GPSLongitude) && verify(exif.gps.GPSLatitude)){
                                         alert("While taking this image, GPS Access  was given to camera but GPS was off")
