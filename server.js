@@ -1,7 +1,8 @@
 const fileUpload      = require('express-fileupload');
 const express         = require('express')
 const ExifImage       = require('exif').ExifImage
-const {writeFileSync} = require('fs')
+const { promisify }   = require('util')
+const write           = promisify(require('fs').writeFile)
 
 const PORT = process.env.PORT || 3030;
 let url = ''
@@ -40,12 +41,12 @@ app.post('/upload', function (req, res) {
             return res.status(500).send(err);
  
         try {
-            new ExifImage({ image : __dirname + '/uploads/' + sampleFile.name }, function (error, exifData) {
+            new ExifImage({ image : __dirname + '/uploads/' + sampleFile.name }, async(error, exifData)=>{
                 if (error)
                 res.send('Error: '+error.message);
                 else{
                     url = getUrl(exifData.gps)
-                    writeFileSync('map.html',`
+                    await write('map.html',`
                         <!DOCTYPE html>
                         <html lang="en">
                         <head>
@@ -88,6 +89,9 @@ app.post('/upload', function (req, res) {
                         </body>
                         </html>
                     `)
+                    await new Promise(function(resolve) { 
+                        setTimeout(resolve, 1000)
+                    });
                     res.sendFile(__dirname + '/map.html')
                 }
                     // Do something with your data!
