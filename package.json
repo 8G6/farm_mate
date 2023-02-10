@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon app.js",
-    "start": "node"
+    "test": "nodemon server.js",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
