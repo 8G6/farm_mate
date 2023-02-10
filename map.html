@@ -1,0 +1,24 @@
+
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>Map</title>
+                        </head>
+                        <body>
+                        <script>
+                            let url = 'https://www.google.com/maps/@9.235177972222221,76.42150877777779,100m/data=!3m1!1e3'
+                            
+                            if(url.length>51){
+                                alert("Allow Popup to see the map")
+                                window.open(url)
+                            }
+                            else{
+                                alert("Image doesnot contain EXIF data or EXIF data doesnot contain GPS info")
+                            }
+                        </script>
+                        </body>
+                        </html>
+                    

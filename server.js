@@ -1,6 +1,7 @@
-const fileUpload = require('express-fileupload');
-const express    = require('express')
-const ExifImage = require('exif').ExifImage
+const fileUpload      = require('express-fileupload');
+const express         = require('express')
+const ExifImage       = require('exif').ExifImage
+const {writeFileSync} = require('fs')
 
 const PORT = process.env.PORT || 3030;
 let url = ''
@@ -14,7 +15,7 @@ function cal(lant){
 function getUrl(gps){
     lat = gps.GPSLatitude
     lon = gps.GPSLongitude
-    return `https://www.google.com/maps/@${cal(lat)},${cal(lon)},14z`
+    return `https://www.google.com/maps/@${cal(lat)},${cal(lon)},100m/data=!3m1!1e3`
 }
 
 app.use(fileUpload());
@@ -34,7 +35,7 @@ app.post('/upload', function (req, res) {
     sampleFile = req.files.file;
     uploadPath = __dirname + '/uploads/' + sampleFile.name;
  
-    sampleFile.mv(uploadPath, function (err) {
+    sampleFile.mv(uploadPath, function(err){
         if (err)
             return res.status(500).send(err);
  
@@ -44,8 +45,31 @@ app.post('/upload', function (req, res) {
                 res.send('Error: '+error.message);
                 else{
                     url = getUrl(exifData.gps)
-                    res.render('map',{url:url})
-                    console.log(url)
+                    writeFileSync('map.html',`
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>Map</title>
+                        </head>
+                        <body>
+                        <script>
+                            let url = '${url}'
+                            
+                            if(url.length>51){
+                                alert("Allow Popup to see the map")
+                                window.open(url)
+                            }
+                            else{
+                                alert("Image doesnot contain EXIF data or EXIF data doesnot contain GPS info")
+                            }
+                        </script>
+                        </body>
+                        </html>
+                    `)
+                    res.sendFile(__dirname + '/map.html')
                 }
                     // Do something with your data!
             });
