@@ -9,14 +9,33 @@
                         </head>
                         <body>
                         <script>
-                            let url = 'https://www.google.com/maps/@9.235177972222221,76.42150877777779,100m/data=!3m1!1e3'
+                            function verify(obj){
+                                return (obj[0] + obj[1] + obj[2]) == 0
+                            }
+
+                            let exif = {"image":{"Make":"--","Model":"--","Orientation":1,"XResolution":72,"YResolution":72,"ResolutionUnit":2,"Software":"Snapseed 2.0","ModifyDate":"2023:01:30 18:10:57","YCbCrPositioning":1,"ExifOffset":195,"GPSInfo":657},"thumbnail":{},"exif":{"ExposureTime":1,"FNumber":0,"ExposureProgram":1,"ISO":0,"ExifVersion":"0220","DateTimeOriginal":"2023:01:30 02:56:13","CreateDate":"","ComponentsConfiguration":{"type":"Buffer","data":[1,2,3,0]},"ShutterSpeedValue":-4.906,"ApertureValue":1.83,"BrightnessValue":-12.97,"ExposureCompensation":4,"MaxApertureValue":1.83,"MeteringMode":2,"LightSource":21,"Flash":0,"FocalLength":0,"SubSecTime":"","SubSecTimeOriginal":"","SubSecTimeDigitized":"","FlashpixVersion":{"type":"Buffer","data":[48,49,48,48]},"ColorSpace":1,"ExifImageWidth":3472,"ExifImageHeight":4208,"InteropOffset":851,"SensingMethod":1,"SceneType":{"type":"Buffer","data":[1]},"ExposureMode":0,"WhiteBalance":0,"FocalLengthIn35mmFormat":25,"SceneCaptureType":0},"gps":{"GPSLatitudeRef":"","GPSLatitude":[0,0,0],"GPSLongitudeRef":"","GPSLongitude":[0,0,0],"GPSAltitudeRef":[],"GPSAltitude":0,"GPSTimeStamp":[0,0,0],"GPSProcessingMethod":"","GPSDateStamp":"0"},"interoperability":{"InteropIndex":"R98"},"makernote":{}}
+                            let url = 'https://www.google.com/maps/@0,0,100m/data=!3m1!1e3'
                             
                             if(url.length>51){
                                 alert("Allow Popup to see the map")
                                 window.open(url)
                             }
                             else{
-                                alert("Image doesnot contain EXIF data or EXIF data doesnot contain GPS info")
+                                if(exif){
+                                    if(exif.gps=={}){
+                                        alert("Image EXIF GPS info is empty")
+                                    }
+                                    else if(verify(exif.gps.GPSLongitude) && verify(exif.gps.GPSLatitude)){
+                                        alert("While taking this image GPS Access  was given to camera but GPS was off while taking photo")
+                                    }
+                                    else{
+                                        alert("EXIF GPS info is not present in image")
+                                    }
+                                }
+                                else{
+                                    alert("Image doesnot contain EXIF data")
+                                }
+                                
                             }
                         </script>
                         </body>

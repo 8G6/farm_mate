@@ -56,6 +56,11 @@ app.post('/upload', function (req, res) {
                         </head>
                         <body>
                         <script>
+                            function verify(obj){
+                                return (obj[0] + obj[1] + obj[2]) == 0
+                            }
+
+                            let exif = ${JSON.stringify(exifData)}
                             let url = '${url}'
                             
                             if(url.length>51){
@@ -63,7 +68,21 @@ app.post('/upload', function (req, res) {
                                 window.open(url)
                             }
                             else{
-                                alert("Image doesnot contain EXIF data or EXIF data doesnot contain GPS info")
+                                if(exif){
+                                    if(exif.gps=={}){
+                                        alert("Image EXIF GPS info is empty")
+                                    }
+                                    else if(verify(exif.gps.GPSLongitude) && verify(exif.gps.GPSLatitude)){
+                                        alert("While taking this image, GPS Access  was given to camera but GPS was off")
+                                    }
+                                    else{
+                                        alert("EXIF GPS info is not present in image")
+                                    }
+                                }
+                                else{
+                                    alert("Image doesnot contain EXIF data")
+                                }
+                                
                             }
                         </script>
                         </body>
