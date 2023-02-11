@@ -1,0 +1,23 @@
+@import url("libs/leaflet.css");
+
+#osm-map{
+    top: 0px;
+    position: fixed;
+    left: 0;
+}
+.form{
+    position: fixed;
+    top:65vh;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+table{
+    position: fixed;
+    top:80vh;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 25vw;
+}
+
+

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXIF GeoLocator</title>
+    <link rel="stylesheet" href="css/include.css">
+</head>
+<body>
+        <script src="js/leaflet.js"></script>
+        <div id="osm-map"></div>
+        <form action="/upload" enctype="multipart/form-data" method="post" class="form">
+            <div class="form-group">
+                <input type="file" name="file">
+                <input type="submit" value="Upload File">
+                <br>
+                <div align="center" style="opacity: 0;">
+                    zoom : <input type="range" min="0" max="25" value="14" name="zoom">
+                </div>
+                <div align="center">
+                    <%- er=='' ? '<p style="color:green;width: 40vw;">Succes</p>' : '<p style="color:red;width: 40vw;"> Error <br>'+er+'</p>' %>
+                </div>
+            </div>
+        </form>
+            <table>
+                <tr>
+                    <th>GPS Longitude</th>
+                    <th>GPS Latitude</th> 
+                </tr>
+                <tr>
+                    <th><%= cordA ? cordA.split(',')[0] : '19.04611' %></th>
+                    <th><%= cordA ? cordA.split(',')[1] : '19.04611'%></th> 
+                </tr>
+                <tr>
+                    <th><%= cordA ? cordD.split(',')[0] : '19.04611'%></th>
+                    <th><%= cordA ? cordD.split(',')[1] : '19.04611'%></th> 
+                </tr>
+            </table>
+        <script>
+            let element = document.getElementById('osm-map');
+            element.style = 'height:50vh;width:100vw';
+            var map = L.map(element);
+            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            var target = L.latLng("<%= cordA ? cordA.split(',')[0] : '47.50737' %>","<%= cordA ? cordA.split(',')[1] : '19.04611' %>");
+            map.setView(target,parseInt('<%= zoom %>'));
+            L.marker(target).addTo(map);
+        </script>
+</body>
+</html>
+
